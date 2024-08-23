@@ -13,6 +13,7 @@
     "dayjs": "^1.11.13",
     "handlebars": "^4.7.8",
     "next": "14.2.6",
+    "pdf-lib": "^1.17.1",
     "puppeteer-core": "^23.1.1",
     "puppeteer-html-pdf": "^4.0.8",
     "react": "^18",
