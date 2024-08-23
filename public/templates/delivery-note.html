@@ -1,0 +1,428 @@
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Delivery Note</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+        display: flex;
+        justify-content: center;
+        padding: 0px 35px;
+        max-width: 800px;
+      }
+
+      p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .items-table .heading {
+        position: fixed;
+        margin: auto;
+      }
+
+      .page-header, .page-header-space {
+        height: 64px;
+        width: 800px;
+      }
+      
+      .page-header {
+        position: fixed;
+        top: 0;   
+        border-bottom: 1px solid black;
+      }
+
+      .page-header .header-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px; 
+      }
+
+      .page-header .header-box .header p {
+        font-size: 18px;
+      }
+
+      .page {
+        page-break-after: always;
+      }
+
+      .details .two-blocks {
+        display: flex;
+        margin-top: 24px;
+      } 
+
+      .details .blocks-6 {
+        width: 50%;
+      }
+
+      .details .title {
+        margin-bottom: 8px;
+      }
+
+      .details .content {
+        color: #b0b0b0;
+      }
+
+      .details .content p span {
+        color: #555;
+      }
+
+      .details table .table-space {
+        height: 30px;
+      }
+
+      .details .items-table table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        padding: 1px;
+        border: 1px solid #5e6869;
+        font-size: 14px;
+      }
+
+      .details .items-table table td {
+        padding: 5px;
+        vertical-align: top;
+      }
+
+      .details .items-table table .heading-space, .details .items-table table thead {
+        height: 30px;
+      }
+
+      .details .items-table table tr.top table td {
+        padding-bottom: 24px;
+      }
+
+      .details .items-table table tr.information table td {
+        padding-bottom: 24px;
+      }
+
+      .details .items-table table thead tr td {    
+        background-color: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .details .items-table table tr.details td {
+        padding-bottom: 24px;
+      }
+
+      .details .items-table table tr.item td {
+        border-bottom: 1px solid #f3f3f3;
+        text-align: center;
+      }
+
+      .details .items-table table tr.item:nth-child(2n + 1) {
+        background-color: #fcfcfc;
+      }
+
+      .details .items-table table tr.item.last td {
+        border-bottom: none;
+      }
+
+      .details .items-table table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+      }
+
+      .details .remarks {
+        margin-top: 16px;
+        color: #b0b0b0;
+        font-style: italic;
+        font-size: 12px;
+        line-height: 1.25;
+      }
+
+      .details .divider {
+        width: 100%;
+        height: 2px;
+        background-color: #ddd;
+        margin: 24px 0;
+      }
+
+      .details .divider.w-50 {
+        width: 50%;
+        margin: 120px auto 0;
+      }
+
+      .details .blocks-6 {
+        width: 50%;
+      }
+
+      .details .blocks-6.center {
+        width: 50%;
+        text-align: center;
+      }
+
+      .details .date {
+        width: 50%;
+        margin: 60px auto 0;
+        text-align: left;
+      }
+
+      .card {
+        display: flex;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin: 8px 0px;
+      }
+
+      .left-column {
+        width: 172px;
+        height: 100%;
+        background-color: #e0e0e0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .left-column img.product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card .content {
+        color: #b0b0b0;
+      }
+
+      .card .content .title,
+      .card .content p span {
+        color: #555;
+        margin: 0;
+      }
+
+      .middle-column,
+      .right-column {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .middle-column {
+        flex: 2;
+      }
+
+      .right-column {
+        flex: 1;
+      }
+
+      .main-title {
+        margin: 24px auto;
+        text-align: center;
+      }
+
+      .main-title p {
+        font-size: 18px;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .details table tr.top table td {
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+
+        .details table tr.information table td {
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+      }
+
+      @page {
+        margin: 30px;
+        width: 800px;
+      }
+
+      @media print {
+        .page-break-inside {
+          page-break-inside: avoid;
+        }
+
+        thead{
+          display: table-header-group;
+        }
+
+        body {
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <section class="header-box">
+          <div class="header">
+            <p style="padding: 0; margin: 0">
+              <strong>{{supplier_name}}</strong>
+            </p>
+            <p style="padding: 0; margin: 0">Delivery Note</p>
+          </div>
+          <div class="header" style="text-align: right;">
+            <p >
+              <strong>{{ general.template_id }}</strong>
+            </p>
+            <p>{{ general.current_date }}</p>
+          </div>
+        </section>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <td>
+              <div class="page-header-space"></div>
+            </td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <div class="page details">
+                <section class="two-blocks">
+                  <div class="blocks-6">
+                    <p class="title"><strong>Sender</strong></p>
+                    <div class="content">
+                      <p>Name : <span>{{supplier_name}}</span></p>
+                      <p>Address : <span>{{supplier_address}}</span></p>
+                      <p>Phone Number : <span>{{supplier_phone}}</span></p>
+                    </div>
+                  </div>
+                  <div class="blocks-6">
+                    <p class="title"><strong>Recipient</strong></p>
+                    <div class="content">
+                      <p>Name : <span>{{warehouse_name}}</span></p>
+                      <p>Address : <span>{{warehouse_address}}</span></p>
+                    </div>
+                  </div>
+                </section>
+                <section class="two-blocks">
+                 <div class="blocks-6">
+                   <p class="title"><strong>Order Details</strong></p>
+                   <div class="content">
+                     <p>Purchase Order ID : <span>{{ purchase_order_id }}</span></p>
+                     <p>Delivery ID : <span>{{ delivery_order_id }}</span></p>
+                     <p>Sent On : <span>{{ sent_on }}</span></p>
+                   </div>
+                 </div>
+                 <div class="blocks-6">
+                   <p class="title"><strong>Driver Details</strong></p>
+                   <div class="content">
+                     <p>Driver Name : <span>{{this.driver_name}}</span></p>
+                     <p>Driver Phone Number : <span>{{this.driver_phone}}</span></p>
+                     <p>Vehicle Name : <span>{{this.vehicle_name}}</span></p>
+                     <p>Vehicle Plate : <span>{{this.vehicle_plate}}</span></p>
+                   </div>
+                 </div>
+               </section>
+               <section class="items-table" style="margin-top: 24px;">
+                  <table  cellpadding="0" cellspacing="0">
+                  
+                    <thead>
+                      <div class="heading-space">
+                        <tr>
+                          <td>Product</td>
+                          <td>Part</td>
+                          <td>Stage</th>
+                          <td>Quantity</td>
+                        </tr>
+                      </div>
+                    </thead>
+                                  
+                    <tbody>
+                   {{#each order_items}}
+                    <tr class="item {{#if @last}} last {{/if}} page-break-inside">
+                      <td>{{this.product}}</td>
+                      <td>{{this.part}}</td>
+                      <td>{{this.stage}}</td>
+                      <td>{{this.quantity}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>       
+
+                  </table>
+                </section>
+                <section>
+                  <p class="remarks">*Remarks: {{remarks}}</p>
+                </section>
+                <section class="two-blocks page-break-inside">
+                  <div class="blocks-6 center">
+                    <div class="date">Date:</div>
+                    <div class="divider w-50"></div>
+                    <div style="margin-top: 10px;">Tarita Officer</div>
+                  </div>
+                  <div class="blocks-6 center">
+                    <div class="date">Date:</div>
+                    <div class="divider w-50"></div>
+                    <div style="margin-top: 10px;">{{supplier_name}} Officer</div>
+                  </div>
+                </section>
+              </div>
+              <div class="page">
+                <div class="header main-title">
+                  <p><strong>PRODUCT DETAILS</strong></p>
+                </div>
+                {{#each products}}
+                <div class="card page-break-inside">
+                  <div class="left-column">
+                    <img
+                      src="{{this.product_image_url}}"
+                      alt="Product Image"
+                      class="product-image"
+                    />
+                  </div>
+                  <div class="middle-column content">
+                    <p class="title">
+                      <strong>{{this.product_name}}</strong>
+                      ({{this.product_code}})
+                    </p>
+                    <p>Wood Type : <span>{{this.product_wood_type}}</span></p>
+                    <p>Color : <span>{{this.product_color}}</span></p>
+                    <p class="title" style="margin-top: 8px">
+                      <strong>Dimension</strong>
+                    </p>
+                    <p>
+                      <span
+                        >{{this.product_length}} &times; {{this.product_width}}
+                        &times; {{this.product_height}} =
+                        {{this.product_size}}</span
+                      >
+                    </p>
+                  </div>
+                  <div class="right-column content">
+                    <p class="title"><strong>Weight</strong></p>
+                    <p>Nett : <span>{{this.product_nett_weight}}</span></p>
+                    <p>Gross : <span>{{this.product_gross_weight}}</span></p>
+                    <p class="title" style="margin-top: 8px">
+                      <strong>Knockdown Size</strong>
+                    </p>
+                    <p><span>{{this.product_knockdown_size}}</span></p>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
